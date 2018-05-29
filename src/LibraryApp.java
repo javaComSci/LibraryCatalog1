@@ -32,7 +32,6 @@ public class LibraryApp {
                                 users.add(currUser);
                             }
                         }
-
                     }
                     if(option == 1){
                         studentOptions(users,books,(Student)currUser);
@@ -83,10 +82,11 @@ public class LibraryApp {
     public static void adminOptions(ArrayList<User> users, ArrayList<Book> books, User currUser){
         Scanner reader = new Scanner(System.in);
         while(true){
-            System.out.println("1.Add new title\n2.Remove book\n3.Change number of copies\n4.All books\n5.Quit");
+            System.out.println("1.Add new title\n2.Remove book\n3.Change number of copies\n4.All books\n" +
+                                "5.View user info\n6.Quit");
             int option = reader.nextInt();
             reader.nextLine();
-            if(option == 5){
+            if(option == 6){
                 break;
             }else if(option == 1){
                 //add a new title with the copies
@@ -135,6 +135,11 @@ public class LibraryApp {
                         System.out.println("This book is currently checked out");
                     }
                 }
+            }else if(option == 5) {
+                System.out.println("Enter name of user to view information");
+                String userName = reader.nextLine();
+                User userInfo = checkUser(userName, users);
+                System.out.println(userInfo);
             }else{
                 //invalid input
                 System.out.println("Enter valid input");

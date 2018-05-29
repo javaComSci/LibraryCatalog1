@@ -43,6 +43,7 @@ public class Book {
     public void returnBook(Student student){
         for(int i = 1; i <= numCopies; i++){
             if((userBookMap.get(i)).equals(student)){
+                System.out.println("Student who is returning is " + student.getName());
                 userBookMap.replace(i, null);
                 checkedOut--;
                 break;
@@ -53,12 +54,12 @@ public class Book {
     //can only be changed by the student
     public void checkOut(Student student){
         for(int i = 1; i <= numCopies; i++){
-            System.out.println(userBookMap.get(i).getName());
             if(userBookMap.get(i) == null){
                 userBookMap.replace(i, student);
                 checkedOut++;
                 break;
             }
+            System.out.println(userBookMap.get(i).getName());
         }
     }
 

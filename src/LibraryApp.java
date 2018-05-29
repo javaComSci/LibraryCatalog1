@@ -1,5 +1,7 @@
 import java.util.*;
 
+import static java.util.Objects.nonNull;
+
 public class LibraryApp {
 
     public static void main(String [] args){
@@ -18,7 +20,7 @@ public class LibraryApp {
                     if (reader.hasNextLine()){
                         String name = reader.nextLine();
                         currUser = checkUser(name, users);
-                        if(currUser != null){
+                        if(nonNull(currUser)){
                             System.out.println("Already in system");
                         }else{
                             System.out.println("Adding to system");
@@ -60,12 +62,19 @@ public class LibraryApp {
             }else{
                 System.out.println("Enter the title of the book.");
                 String title = reader.nextLine();
+                Book b = null;
+                for(Book book: books){
+                    if(book.getName().equals(title)){
+                       b = book;
+                       break;
+                    }
+                }
                 if(option == 1){
-                    currUser.checkOut(title);
+                    currUser.checkOut(b);
                 }else if(option == 2){
-                    currUser.returnBook(title);
+                    currUser.returnBook(b);
                 }else if(option == 3){
-                    currUser.reserveBook(title);
+                    currUser.reserveBook(b);
                 }
             }
         }
@@ -74,12 +83,13 @@ public class LibraryApp {
     public static void adminOptions(ArrayList<User> users, ArrayList<Book> books, User currUser){
         Scanner reader = new Scanner(System.in);
         while(true){
-            System.out.println("1.Add new title\n2.Remove book\n3.Change number of copies\n4.Quit");
+            System.out.println("1.Add new title\n2.Remove book\n3.Change number of copies\n4.All books\n5.Quit");
             int option = reader.nextInt();
             reader.nextLine();
-            if(option == 4){
+            if(option == 5){
                 break;
             }else if(option == 1){
+                //add a new title with the copies
                 System.out.println("Enter title of book to add");
                 String title = "Untitled";
                 if(reader.hasNextLine()){
@@ -94,10 +104,12 @@ public class LibraryApp {
                 Book book = new Book(title,copies);
                 books.add(book);
             }else if(option == 2){
+                //title of the book that needs to be removed from the list of books
                 System.out.println("Enter title of book to remove");
                 String title = reader.nextLine();
                 checkTitle(title, books, true);
             }else if(option == 3){
+                //number of copies of the book needs to be changed
                 System.out.println("Enter title of book to change number of copies");
                 String title = reader.nextLine();
                 Book b = checkTitle(title,books,false);
@@ -106,12 +118,25 @@ public class LibraryApp {
                     int op = reader.nextInt();
                     reader.nextLine();
                     if(op == 1){
-                        b.addCopies(op);
+                        System.out.println("Enter number of copies to add");
+                        int copies = reader.nextInt();
+                        b.addCopies(copies);
                     }else{
-                        b.removeCopies(op);
+                        System.out.println("Enter number of copies to remove");
+                        int copies = reader.nextInt();
+                        b.removeCopies(copies);
+                    }
+                }
+            }else if(option == 4){
+                //prints out all titles of book in the library
+                for(Book book: books){
+                    System.out.println(book.getName() + " " + book.getCopies());
+                    if(book.getNumCheckedOut() != 0){
+                        System.out.println("This book is currently checked out");
                     }
                 }
             }else{
+                //invalid input
                 System.out.println("Enter valid input");
                 continue;
             }

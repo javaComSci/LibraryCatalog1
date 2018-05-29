@@ -6,7 +6,5 @@ public class Admin extends User {
   public void removeUser(String name){
 
   }
-  public void addBook(String name){
 
-  }
 }

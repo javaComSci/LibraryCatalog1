@@ -5,7 +5,7 @@ public class User {
 
     String name;
     //for each user, has a list of the books checked out or list of books added
-    private ArrayList<Book> userBooks = new ArrayList<Book>();
+    protected ArrayList<Book> userBooks = new ArrayList<Book>();
 
     public User(String name){
         this.name = name;
